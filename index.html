@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CampusSwap – Student Marketplace</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <nav class="nav container" aria-label="Main navigation">
+    <a href="#home" class="logo">🔄 Campus<span>Swap</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#explore">Explore Products</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#wishlist">♥ Wishlist (<span id="wishCount">0</span>)</a></li>
+      <li><button class="btn btn-ghost" data-auth="login">Login</button></li>
+      <li><button class="btn btn-ghost" data-auth="signup">Sign Up</button></li>
+      <li><a href="#sell" class="btn btn-primary">Sell an Item</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <span class="badge">🎓 Made for university students</span>
+      <h1>Buy Smart. Sell Easy. Swap on Campus.</h1>
+      <p class="lead">CampusSwap connects students to buy, sell, exchange or give away used books, gadgets, clothes and hostel essentials — right on your campus.</p>
+      <form class="hero-search" id="heroForm">
+        <label class="sr-only" for="heroQuery">Search products</label>
+        <input id="heroQuery" type="search" placeholder="Search calculators, books, bikes…">
+        <label class="sr-only" for="heroCat">Category</label>
+        <select id="heroCat"></select>
+        <button class="btn btn-primary" type="submit">Explore Marketplace</button>
+      </form>
+      <a href="#sell" class="btn btn-outline">Start Selling</a>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="float-card c1">📚<b>Rs 1,200</b></div>
+      <div class="float-card c2">🎧<b>Rs 4,500</b></div>
+      <div class="float-card c3">🚲<b>Rs 9,000</b></div>
+      <div class="hero-emoji">🛍️</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="categories">
+  <div class="container">
+    <h2>Browse by Category</h2>
+    <div class="cat-grid" id="categoryGrid"></div>
+  </div>
+</section>
+
+<section class="section alt" id="featured">
+  <div class="container">
+    <h2>Featured Products</h2>
+    <div class="product-grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="explore">
+  <div class="container">
+    <h2>Explore Marketplace</h2>
+    <div class="filters">
+      <div><label for="search">Search</label><input id="search" type="search" placeholder="Search products…"></div>
+      <div><label for="catFilter">Category</label><select id="catFilter"></select></div>
+      <div><label for="condFilter">Condition</label>
+        <select id="condFilter"><option value="">All conditions</option><option>New</option><option>Like New</option><option>Used</option></select></div>
+      <div><label for="sort">Sort by price</label>
+        <select id="sort"><option value="">Default</option><option value="asc">Low to high</option><option value="desc">High to low</option></select></div>
+      <button class="btn btn-outline" id="clearFilters" type="button">Clear Filters</button>
+    </div>
+    <p class="muted" id="resultCount"></p>
+    <div class="product-grid" id="productGrid"></div>
+    <div class="empty" id="emptyState" hidden>
+      <p>😕 No products match your filters.</p>
+      <button class="btn btn-primary" data-clear>Clear Filters</button>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="sell">
+  <div class="container narrow">
+    <h2>Sell an Item</h2>
+    <p class="muted">Listings are saved in your browser's <b>localStorage</b>. This is only browser storage on this device — not a real online database.</p>
+    <form class="card form" id="sellForm" novalidate>
+      <div class="field"><label for="sTitle">Product title</label><input id="sTitle" required><small class="error"></small></div>
+      <div class="field"><label for="sDesc">Description</label><textarea id="sDesc" rows="3" required></textarea><small class="error"></small></div>
+      <div class="row">
+        <div class="field"><label for="sPrice">Price (PKR)</label><input id="sPrice" type="number" min="1" required><small class="error"></small></div>
+        <div class="field"><label for="sCat">Category</label><select id="sCat" required></select><small class="error"></small></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="sCond">Condition</label>
+          <select id="sCond" required><option value="">Select…</option><option>New</option><option>Like New</option><option>Used</option></select><small class="error"></small></div>
+        <div class="field"><label for="sCampus">Campus</label><input id="sCampus" placeholder="e.g. NUST Islamabad" required><small class="error"></small></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="sSeller">Seller name</label><input id="sSeller" required><small class="error"></small></div>
+        <div class="field"><label for="sImage">Product image URL (optional)</label><input id="sImage" type="url" placeholder="https://…"><small class="error"></small></div>
+      </div>
+      <button class="btn btn-primary" type="submit">List Item</button>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="wishlist">
+  <div class="container">
+    <h2>♥ Your Wishlist</h2>
+    <div class="product-grid" id="wishGrid"></div>
+    <div class="empty" id="wishEmpty" hidden><p>No favorites yet. Tap the ♡ on any product to save it.</p></div>
+  </div>
+</section>
+
+<section class="section alt" id="how">
+  <div class="container">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="card step"><span>1</span><h3>Browse</h3><p>Browse products available on campus.</p></div>
+      <div class="card step"><span>2</span><h3>Connect</h3><p>Contact the seller and discuss the exchange.</p></div>
+      <div class="card step"><span>3</span><h3>Meet Safely</h3><p>Meet in a public campus spot and complete the transaction.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container foot-grid">
+    <div><a href="#home" class="logo light">🔄 Campus<span>Swap</span></a>
+      <p>A student-to-student marketplace. Frontend demo project.</p></div>
+    <div><h4>Navigate</h4><a href="#home">Home</a><a href="#explore">Explore</a><a href="#sell">Sell an Item</a><a href="#how">How It Works</a></div>
+    <div><h4>Categories</h4><div id="footerCats"></div></div>
+    <div><h4>Contact (demo)</h4><p>demo@campusswap.example<br>+92 300 0000000<br>Demo Campus, Pakistan</p>
+      <p class="social"><a href="#" data-demo="Twitter" aria-label="Twitter">𝕏</a><a href="#" data-demo="Instagram" aria-label="Instagram">📷</a><a href="#" data-demo="Facebook" aria-label="Facebook">f</a></p></div>
+  </div>
+  <p class="copy">© 2026 CampusSwap. University demo project — no real transactions.</p>
+</footer>
+
+<dialog id="productModal" aria-label="Product details"><button class="close" data-close aria-label="Close">✕</button><div id="productModalBody"></div></dialog>
+
+<dialog id="authModal" aria-label="Login or sign up">
+  <button class="close" data-close aria-label="Close">✕</button>
+  <div class="tabs"><button class="tab" data-tab="login">Login</button><button class="tab" data-tab="signup">Sign Up</button></div>
+  <p class="notice">Demo only: no real accounts are created and passwords are never stored.</p>
+  <form class="form" id="authForm" novalidate>
+    <div class="field" id="nameField"><label for="aName">Name</label><input id="aName"><small class="error"></small></div>
+    <div class="field"><label for="aEmail">Email</label><input id="aEmail" type="email"><small class="error"></small></div>
+    <div class="field"><label for="aPass">Password</label>
+      <div class="pw"><input id="aPass" type="password"><button type="button" id="pwToggle" aria-label="Show password">👁</button></div><small class="error"></small></div>
+    <button class="btn btn-primary" type="submit" id="authSubmit">Login</button>
+  </form>
+</dialog>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
